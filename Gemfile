@@ -8,20 +8,9 @@ gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
-
-
-
-group :development, :test do
-end
-
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
-end
-
-
-
-group :development do
   gem 'bullet'
   gem 'dotenv-rails'
   gem 'faker'
