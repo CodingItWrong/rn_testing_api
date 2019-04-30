@@ -20,3 +20,16 @@ group :development do
 end
 
 
+
+group :development do
+  gem 'bullet'
+  gem 'dotenv-rails'
+  gem 'faker'
+end
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'rspec-rails'
+  gem 'coderay'
+  gem 'rubocop'
+end
