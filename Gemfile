@@ -10,12 +10,12 @@ gem 'uglifier', '>= 1.3.0'
 gem 'rack-cors'
 gem 'devise'
 gem 'doorkeeper'
+gem 'dotenv-rails'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'bullet'
-  gem 'dotenv-rails'
   gem 'faker'
 end
 
