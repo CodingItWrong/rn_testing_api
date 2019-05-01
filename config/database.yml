@@ -81,6 +81,6 @@ test:
 production:
   <<: *default
   host: <%= ENV['DATABASE_HOST'] %>
-  database: ideas_production
+  database: rn_testing_api_production
   username: postgres
   password:
