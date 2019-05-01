@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   use_doorkeeper
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+  
   resources :widgets, only: %i(index)
 end
