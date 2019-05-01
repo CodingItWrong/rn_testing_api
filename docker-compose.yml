@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/myapp
     ports:
-      - "3003:3000"
+      - "3008:3000"
     links:
       - db
     depends_on:
