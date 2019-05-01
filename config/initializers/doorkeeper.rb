@@ -4,6 +4,13 @@ Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (needs plugins)
   orm :active_record
 
+  resource_owner_from_credentials do
+    user = User.find_for_database_authentication(:email => params[:username])
+    if user && user.valid_for_authentication? { user.valid_password?(params[:password]) }
+      user
+    end
+  end
+
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
     raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
@@ -46,7 +53,7 @@ Doorkeeper.configure do
   # Access token expiration time (default 2 hours).
   # If you want to disable expiration, set this to nil.
   #
-  # access_token_expires_in 2.hours
+  access_token_expires_in nil
 
   # Assign custom TTL for access tokens. Will be used instead of access_token_expires_in
   # option if defined. In case the block returns `nil` value Doorkeeper fallbacks to
@@ -288,7 +295,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  # grant_flows %w[authorization_code client_credentials]
+  grant_flows %w[password]
 
   # Hook into the strategies' request & response life-cycle in case your
   # application needs advanced customization or logging:
