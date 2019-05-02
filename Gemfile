@@ -11,6 +11,7 @@ gem 'rack-cors'
 gem 'devise'
 gem 'doorkeeper'
 gem 'dotenv-rails'
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
