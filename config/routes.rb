@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  use_doorkeeper
+  root 'pages#home'
+
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
+
+  use_doorkeeper
 
   resources :widgets
 end

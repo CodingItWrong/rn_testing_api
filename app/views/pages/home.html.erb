@@ -1,0 +1,151 @@
+<p>
+This is a sample API for experimenting with React Native testing. It allows you to create an account so you can modify your own data.
+</p>
+
+<p>
+<%= link_to 'Sign up', new_user_registration_path %> for a free account. Then you can use the same username and password to log in to the API.
+</p>
+
+<h2>Contents</h2>
+
+<ul>
+  <li><a href="#logging-in">Logging In</a></li>
+  <li><a href="#accessing-data">Accessing Data</a></li>
+  <ul>
+    <li><a href="#list-widgets">List Widgets</a></li>
+    <li><a href="#show-widget">Show Widget</a></li>
+    <li><a href="#create-widget">Create Widget</a></li>
+    <li><a href="#update-widget">Update Widget</a></li>
+    <li><a href="#delete-widget">Delete Widget</a></li>
+  </ul>
+  <li><a href="#learning-more">Learning More</a></li>
+  <li><a href="#about">About React Native Testing API</a></li>
+</ul>
+
+<h2><a name="logging-in"></a>Logging In</h2>
+
+<p>
+You authenticate to the API with the OAuth 2 password grant.
+</p>
+
+<pre><code class="language-http">POST <%= base_url %>/oauth/token
+
+grant_type=password
+username=you@yourodmain.com
+password=yourpassword</code></pre>
+
+<p>
+You'll receive back the token to use:
+</p>
+
+<pre><code class="language-json">{
+    "access_token": "b027b3ed38739a1d01c2ac05008f0cb4e7a764acc802e0cfb1e5bf1a4876597c",
+    "token_type": "bearer",
+    "expires_in": 7200,
+    "created_at": 1531855327
+}</code></pre>
+
+<h2><a name="accessing-data"></a>Accessing Data</h2>
+
+All your requests should include the following header:
+
+<pre><code class="language-http">Authorization: Bearer YOUR_TOKEN</code></pre>
+
+<h3><a name="list-widgets"></a>List Widgets</h3>
+
+<pre><code class="language-http">GET <%= base_url %>/widgets</code></pre>
+
+Response:
+
+<pre><code class="language-http">200 OK</code></pre>
+
+<pre><code class="language-json">[
+    {
+        "id": 1,
+        "name": "Test Widget"
+    }
+]</code></pre>
+
+<h3><a name="show-widget"></a>Show Widget</h3>
+
+<pre><code class="language-http">GET <%= base_url %>/widgets/1</code></pre>
+
+Response:
+
+<pre><code class="language-http">200 OK</code></pre>
+
+<pre><code class="language-json">{
+    "id": 1,
+    "name": "Test Widget"
+}</code></pre>
+
+<h3><a name="create-widget"></a>Create Widget</h3>
+
+Request
+
+<pre><code class="language-http">POST <%= base_url %>/widgets</code></pre>
+
+<pre><code class="language-json">{
+    "name": "Posted Widget"
+}</code></pre>
+
+Response
+
+<pre><code class="language-http">201 Created</code></pre>
+
+<pre><code class="language-json">{
+    "id": 2,
+    "name": "Posted Widget",
+}</code></pre>
+
+<h3><a name="update-widget"></a>Update Widget</h3>
+
+Request
+
+<pre><code class="language-http">PATCH <%= base_url %>/widgets/1</code></pre>
+
+<pre><code class="language-json">{
+    "name": "Updated Widget"
+}</code></pre>
+
+Response
+
+<pre><code class="language-http">200 OK</code></pre>
+
+<pre><code class="language-json">{
+    "id": 1,
+    "name": "Updated Widget",
+}</code></pre>
+
+<h3><a name="delete-widget"></a>Delete Widget</h3>
+
+Request
+
+<pre><code class="language-http">DELETE <%= base_url %>/widgets/1</code></pre>
+
+Response
+
+<pre><code class="language-http">204 No Content</code></pre>
+
+<h2><a name="about"></a>About React Native Testing API</h2>
+
+<p>
+This API is implemented with Ruby on Rails. It's one of the easiest ways to create an API! To learn more about the benefits Ruby on Rails provides for APIs, visit <a href="https://railsapi.dev">RailsAPI.dev</a>.
+</p>
+
+<p>
+View the <a href="https://github.com/CodingItWrong/rn_workshop_api">GitHub repo for React Native Testing API</a> to download and run it locally, or to contribute.
+</p>
+
+<p>
+Gems used:
+</p>
+
+<ul>
+  <li><a href="http://devise.plataformatec.com.br/">Devise</a> for web interface authentication</li>
+  <li><a href="https://github.com/doorkeeper-gem/doorkeeper">Doorkeeper</a> for OAuth 2 authentication</li>
+</ul>
+
+<p>
+React Native Testing API is by <a href="https://codingitwrong.com">CodingItWrong</a>
+</p>
