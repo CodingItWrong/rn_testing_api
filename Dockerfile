@@ -1,7 +1,8 @@
 FROM ruby:2.6.2
 
-RUN apt-get update
-RUN apt-get install -y nodejs
+RUN wget -qO- https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get update && \
+    apt-get install -y nodejs
 RUN gem install bundler:2.0.1
 RUN gem install nokogiri -v 1.10.3
 
