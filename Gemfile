@@ -12,6 +12,8 @@ gem 'devise'
 gem 'doorkeeper'
 gem 'dotenv-rails'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
