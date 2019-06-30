@@ -54,8 +54,8 @@ class WidgetsController < ApiController
 
   def sample_widgets
     [
-      Widget.new(name: 'Widget 1'),
-      Widget.new(name: 'Widget 2'),
+      Widget.new(id: 1, name: 'Widget 1'),
+      Widget.new(id: 2, name: 'Widget 2'),
     ]
   end
 end
