@@ -11,7 +11,7 @@ gem 'rack-cors'
 gem 'devise'
 gem 'doorkeeper'
 gem 'dotenv-rails'
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'active_model_serializers', '~> 0.10.10'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 
