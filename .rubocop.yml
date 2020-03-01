@@ -4,6 +4,7 @@ AllCops:
 
   # Don't check binstubs or gemfile
   Exclude:
+    - 'app/controllers/users/*'
     - 'bin/**/*'
     - 'config/**/*'
     - 'config.ru'
@@ -55,7 +56,7 @@ Layout/LineLength:
   Enabled: false
 
 # Allow *%i[…]
-Lint/UnneededSplatExpansion:
+Lint/RedundantSplatExpansion:
   Enabled: false
 Lint/AmbiguousOperator:
   Enabled: false
