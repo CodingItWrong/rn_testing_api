@@ -3,11 +3,12 @@ class WidgetsController < ApiController
   before_action :doorkeeper_authorize!, except: [:index]
 
   def index
-    widgets = if current_user.present?
-      current_user.widgets
-    else
-      sample_widgets
-    end
+    widgets =
+      if current_user.present?
+        current_user.widgets
+      else
+        sample_widgets
+      end
     render json: widgets
   end
 
