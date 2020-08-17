@@ -12,7 +12,7 @@ gem 'devise'
 gem 'doorkeeper'
 gem 'dotenv-rails'
 gem 'active_model_serializers', '~> 0.10.10'
-gem 'bootstrap', '~> 4.5.0'
+gem 'bootstrap', '~> 4.5.2'
 gem 'jquery-rails'
 
 group :development do
