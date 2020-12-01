@@ -16,7 +16,7 @@ gem 'bootstrap', '~> 4.5.3'
 gem 'jquery-rails'
 
 group :development do
-  gem 'listen', '>= 3.0.5', '< 3.3'
+  gem 'listen', '>= 3.0.5', '< 3.4'
   gem 'bullet'
 end
 
