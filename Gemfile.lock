@@ -252,7 +252,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.12)
-  bootstrap (~> 4.6.0)
+  bootstrap (~> 4.6.0, < 5)
   bullet
   coderay
   devise
