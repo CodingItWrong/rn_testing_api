@@ -4,7 +4,7 @@ ruby '3.0.1'
 
 gem 'rails', '~> 6.1.4'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 5.4'
+gem 'puma', '~> 5.5'
 gem 'sassc-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'rack-cors'
