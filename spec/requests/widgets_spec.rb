@@ -30,9 +30,16 @@ RSpec.describe 'widgets', type: :request do
 
         widgets = JSON.parse(response.body)
 
-        expect(widgets.length).to eq(2)
-        expect(widgets[0]['name']).to eq('Widget 1')
-        expect(widgets[1]['name']).to eq('Widget 2')
+        expect(widgets).to eq([
+          {
+            'id' => 1,
+            'name' => 'Widget 1',
+          },
+          {
+            'id' => 2,
+            'name' => 'Widget 2',
+          },
+        ])
       end
     end
 
@@ -44,9 +51,16 @@ RSpec.describe 'widgets', type: :request do
 
         widgets = JSON.parse(response.body)
 
-        expect(widgets.length).to eq(2)
-        expect(widgets[0]['name']).to eq(user_widget1.name)
-        expect(widgets[1]['name']).to eq(user_widget2.name)
+        expect(widgets).to eq([
+          {
+            'id' => user_widget1.id,
+            'name' => user_widget1.name,
+          },
+          {
+            'id' => user_widget2.id,
+            'name' => user_widget2.name,
+          },
+        ])
       end
     end
   end
@@ -68,7 +82,10 @@ RSpec.describe 'widgets', type: :request do
 
         widget = JSON.parse(response.body)
 
-        expect(widget['name']).to eq(user_widget1.name)
+        expect(widget).to eq(
+          'id' => user_widget1.id,
+          'name' => user_widget1.name,
+        )
       end
 
       it "errors on another user's widget" do
@@ -108,8 +125,10 @@ RSpec.describe 'widgets', type: :request do
 
         widget_body = JSON.parse(response.body)
 
-        expect(widget_body['id']).to eq(widget.id)
-        expect(widget_body['name']).to eq(name)
+        expect(widget_body).to eq(
+          'id' => widget.id,
+          'name' => name,
+        )
       end
 
       it 'rejects invalid data' do
@@ -151,8 +170,10 @@ RSpec.describe 'widgets', type: :request do
 
         widget_body = JSON.parse(response.body)
 
-        expect(widget_body['id']).to eq(user_widget1.id)
-        expect(widget_body['name']).to eq(updated_name)
+        expect(widget_body).to eq(
+          'id' => user_widget1.id,
+          'name' => updated_name,
+        )
       end
 
       it "does not allow updating another user's record" do
