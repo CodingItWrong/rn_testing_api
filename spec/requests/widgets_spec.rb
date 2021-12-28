@@ -176,4 +176,33 @@ RSpec.describe 'widgets', type: :request do
       end
     end
   end
+
+  describe '#destroy' do
+    context 'when unauthenticated' do
+      it 'returns unauthorized' do
+        expect {
+          delete "/widgets/#{user_widget1.id}", headers: unauth_headers
+        }.not_to (change { Widget.count })
+
+        expect(response).to be_unauthorized
+      end
+    end
+
+    context 'when authenticated' do
+      it 'deletes the record' do
+        expect {
+          delete "/widgets/#{user_widget1.id}", headers: auth_headers
+        }.to change { Widget.count }.by(-1)
+        expect(response.status).to eq(204)
+      end
+
+      it "does not allow deleting another user's record" do
+        expect {
+          delete "/widgets/#{other_widget.id}", headers: auth_headers
+        }.not_to (change { Widget.count })
+
+        expect(response.status).to eq(401)
+      end
+    end
+  end
 end
