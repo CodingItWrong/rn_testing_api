@@ -14,17 +14,19 @@ RSpec.describe 'widgets', type: :request do
     { 'Authorization' => "Bearer #{token}" }
   end
 
-  context 'when authenticated' do
-    it "returns user's widgets" do
-      get '/widgets', headers: headers
+  describe 'list' do
+    context 'when authenticated' do
+      it "returns user's widgets" do
+        get '/widgets', headers: headers
 
-      expect(response).to be_successful
+        expect(response).to be_successful
 
-      widgets = JSON.parse(response.body)
+        widgets = JSON.parse(response.body)
 
-      expect(widgets.length).to eq(2)
-      expect(widgets[0]['name']).to eq(user_widget1.name)
-      expect(widgets[1]['name']).to eq(user_widget2.name)
+        expect(widgets.length).to eq(2)
+        expect(widgets[0]['name']).to eq(user_widget1.name)
+        expect(widgets[1]['name']).to eq(user_widget2.name)
+      end
     end
   end
 end
