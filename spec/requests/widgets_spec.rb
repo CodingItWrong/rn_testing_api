@@ -15,6 +15,20 @@ RSpec.describe 'widgets', type: :request do
   end
 
   describe 'list' do
+    context 'when unauthenticated' do
+      it 'returns hard-coded sample widgets' do
+        get '/widgets'
+
+        expect(response).to be_successful
+
+        widgets = JSON.parse(response.body)
+
+        expect(widgets.length).to eq(2)
+        expect(widgets[0]['name']).to eq('Widget 1')
+        expect(widgets[1]['name']).to eq('Widget 2')
+      end
+    end
+
     context 'when authenticated' do
       it "returns user's widgets" do
         get '/widgets', headers: headers
