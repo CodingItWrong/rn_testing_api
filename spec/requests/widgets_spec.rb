@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'list widgets', type: :request do
+RSpec.describe 'widgets', type: :request do
   let!(:user) { FactoryBot.create(:user) }
   let!(:widget) { FactoryBot.create(:widget, user: user) }
   let!(:other_widget) { FactoryBot.create(:widget) }
