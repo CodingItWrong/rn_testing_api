@@ -155,6 +155,15 @@ RSpec.describe 'widgets', type: :request do
         expect(widget_body['name']).to eq(updated_name)
       end
 
+      it "does not allow updating another user's record" do
+        patch "/widgets/#{other_widget.id}", headers: auth_headers, params: body.to_json
+
+        other_widget.reload
+        expect(other_widget.name).not_to eq(updated_name)
+
+        expect(response.status).to eq(401)
+      end
+
       it 'rejects invalid data' do
         invalid_body = {name: ''}
 
