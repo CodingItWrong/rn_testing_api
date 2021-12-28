@@ -43,4 +43,32 @@ RSpec.describe 'widgets', type: :request do
       end
     end
   end
+
+  describe 'detail' do
+    context 'when unauthenticated' do
+      it 'returns unauthorized' do
+        get "/widgets/#{user_widget1.id}"
+        expect(response).to be_unauthorized
+        expect(response.body).to eq('')
+      end
+    end
+
+    context 'when authenticated' do
+      it "returns user's widget" do
+        get "/widgets/#{user_widget1.id}", headers: headers
+
+        expect(response).to be_successful
+
+        widget = JSON.parse(response.body)
+
+        expect(widget['name']).to eq(user_widget1.name)
+      end
+
+      it "errors on another user's widget" do
+        expect {
+          get "/widgets/#{other_widget.id}", headers: headers
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
 end
