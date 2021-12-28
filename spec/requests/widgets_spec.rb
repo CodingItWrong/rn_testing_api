@@ -11,7 +11,10 @@ RSpec.describe 'widgets', type: :request do
     FactoryBot.create(:access_token, resource_owner_id: user.id).token
   end
   let(:headers) do
-    { 'Authorization' => "Bearer #{token}" }
+    {
+      'Content-Type' => 'application/json',
+      'Authorization' => "Bearer #{token}",
+    }
   end
 
   describe 'list' do
@@ -68,6 +71,50 @@ RSpec.describe 'widgets', type: :request do
         expect {
           get "/widgets/#{other_widget.id}", headers: headers
         }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe 'create' do
+    name = 'New Widget'
+    body = {name: name}
+
+    context 'when unauthenticated' do
+      it 'returns unauthorized' do
+        expect {
+          post '/widgets',
+               headers: {'Content-Type' => 'application/json'},
+               params: body.to_json
+        }.not_to(change { Widget.count })
+
+        expect(response).to be_unauthorized
+      end
+    end
+
+    context 'when authenticated' do
+      it 'saves and returns a new widget' do
+        expect {
+          post '/widgets', headers: headers, params: body.to_json
+        }.to change { Widget.count }.by(1)
+
+        widget = Widget.last
+        expect(widget.name).to eq(name)
+
+        expect(response).to be_successful
+
+        widget_body = JSON.parse(response.body)
+
+        expect(widget_body['id']).to eq(widget.id)
+        expect(widget_body['name']).to eq(name)
+      end
+
+      it 'rejects invalid data' do
+        invalid_body = {name: ''}
+        expect {
+          post '/widgets', headers: headers, params: invalid_body.to_json
+        }.not_to(change { Widget.count })
+
+        expect(response.status).to eq(422)
       end
     end
   end
