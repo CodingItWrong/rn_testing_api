@@ -10,11 +10,15 @@ RSpec.describe 'widgets', type: :request do
   let(:token) do
     FactoryBot.create(:access_token, resource_owner_id: user.id).token
   end
-  let(:headers) do
+  let(:unauth_headers) do
     {
       'Content-Type' => 'application/json',
-      'Authorization' => "Bearer #{token}",
     }
+  end
+  let(:auth_headers) do
+    unauth_headers.merge(
+      'Authorization' => "Bearer #{token}",
+    )
   end
 
   describe 'list' do
@@ -34,7 +38,7 @@ RSpec.describe 'widgets', type: :request do
 
     context 'when authenticated' do
       it "returns user's widgets" do
-        get '/widgets', headers: headers
+        get '/widgets', headers: auth_headers
 
         expect(response).to be_successful
 
@@ -58,7 +62,7 @@ RSpec.describe 'widgets', type: :request do
 
     context 'when authenticated' do
       it "returns user's widget" do
-        get "/widgets/#{user_widget1.id}", headers: headers
+        get "/widgets/#{user_widget1.id}", headers: auth_headers
 
         expect(response).to be_successful
 
@@ -69,7 +73,7 @@ RSpec.describe 'widgets', type: :request do
 
       it "errors on another user's widget" do
         expect {
-          get "/widgets/#{other_widget.id}", headers: headers
+          get "/widgets/#{other_widget.id}", headers: auth_headers
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -83,7 +87,7 @@ RSpec.describe 'widgets', type: :request do
       it 'returns unauthorized' do
         expect {
           post '/widgets',
-               headers: {'Content-Type' => 'application/json'},
+               headers: unauth_headers,
                params: body.to_json
         }.not_to(change { Widget.count })
 
@@ -94,7 +98,7 @@ RSpec.describe 'widgets', type: :request do
     context 'when authenticated' do
       it 'saves and returns a new widget' do
         expect {
-          post '/widgets', headers: headers, params: body.to_json
+          post '/widgets', headers: auth_headers, params: body.to_json
         }.to change { Widget.count }.by(1)
 
         widget = Widget.last
@@ -111,7 +115,7 @@ RSpec.describe 'widgets', type: :request do
       it 'rejects invalid data' do
         invalid_body = {name: ''}
         expect {
-          post '/widgets', headers: headers, params: invalid_body.to_json
+          post '/widgets', headers: auth_headers, params: invalid_body.to_json
         }.not_to(change { Widget.count })
 
         expect(response.status).to eq(422)
