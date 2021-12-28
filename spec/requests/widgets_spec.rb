@@ -122,4 +122,49 @@ RSpec.describe 'widgets', type: :request do
       end
     end
   end
+
+  describe '#update' do
+    updated_name = 'Updated Name'
+    body = {name: updated_name}
+
+    context 'when unauthenticated' do
+      it 'returns unauthorized' do
+        patch "/widgets/#{user_widget1.id}",
+              headers: unauth_headers,
+              params: body.to_json
+
+        expect(response).to be_unauthorized
+
+        user_widget1.reload
+        expect(user_widget1.name).not_to eq(updated_name)
+      end
+    end
+
+    context 'when authenticated' do
+      it 'saves changes and returns the updated record' do
+        patch "/widgets/#{user_widget1.id}", headers: auth_headers, params: body.to_json
+
+        user_widget1.reload
+        expect(user_widget1.name).to eq(updated_name)
+
+        expect(response).to be_successful
+
+        widget_body = JSON.parse(response.body)
+
+        expect(widget_body['id']).to eq(user_widget1.id)
+        expect(widget_body['name']).to eq(updated_name)
+      end
+
+      it 'rejects invalid data' do
+        invalid_body = {name: ''}
+
+        post '/widgets', headers: auth_headers, params: invalid_body.to_json
+
+        expect(response.status).to eq(422)
+
+        user_widget1.reload
+        expect(user_widget1.name).not_to eq(updated_name)
+      end
+    end
+  end
 end
