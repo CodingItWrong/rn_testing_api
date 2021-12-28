@@ -21,7 +21,7 @@ RSpec.describe 'widgets', type: :request do
     )
   end
 
-  describe 'list' do
+  describe '#index' do
     context 'when unauthenticated' do
       it 'returns hard-coded sample widgets' do
         get '/widgets'
@@ -51,7 +51,7 @@ RSpec.describe 'widgets', type: :request do
     end
   end
 
-  describe 'detail' do
+  describe '#show' do
     context 'when unauthenticated' do
       it 'returns unauthorized' do
         get "/widgets/#{user_widget1.id}"
@@ -79,7 +79,7 @@ RSpec.describe 'widgets', type: :request do
     end
   end
 
-  describe 'create' do
+  describe '#create' do
     name = 'New Widget'
     body = {name: name}
 
