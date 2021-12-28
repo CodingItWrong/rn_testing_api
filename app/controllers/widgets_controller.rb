@@ -9,17 +9,17 @@ class WidgetsController < ApiController
       else
         sample_widgets
       end
-    render json: widgets
+    render json: widgets.map(&:to_json)
   end
 
   def show
-    render json: current_user.widgets.find(params[:id])
+    render json: current_user.widgets.find(params[:id]).to_json
   end
 
   def create
     widget = current_user.widgets.new(widget_params)
     if widget.save
-      render json: widget, status: :created
+      render json: widget.to_json, status: :created
     else
       render json: widget.errors, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class WidgetsController < ApiController
       return
     end
     if widget.update(widget_params)
-      render json: widget
+      render json: widget.to_json
     else
       render json: widget.errors, status: :unprocessable_entity
     end
